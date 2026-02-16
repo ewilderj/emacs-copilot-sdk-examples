@@ -1,0 +1,91 @@
+* emacs-copilot-sdk-examples
+
+Example applications built on [[https://github.com/ewilderj/emacs-copilot-sdk][copilot-sdk.el]], a pure Emacs Lisp
+client for the GitHub Copilot SDK.
+
+By [[https://github.com/ewilderj][Edd Wilder-James]], co-authored with [[https://github.com/features/copilot][GitHub Copilot]].
+
+** Prerequisites
+
+- Emacs 29.1+
+- [[https://github.com/ewilderj/emacs-copilot-sdk][copilot-sdk.el]] on your =load-path=
+- The =copilot= CLI binary on =$PATH=
+- A valid GitHub Copilot token (=GH_TOKEN= or =copilot auth=)
+
+** Examples
+
+*** echo-bot — Hello World
+
+Bare minimum: connect, send one message, print response, disconnect.
+~35 lines.  Proves the SDK works end-to-end.
+
+#+begin_src elisp
+(require 'copilot-echo-bot)
+M-x copilot-echo-bot
+#+end_src
+
+*** docstring — Generate Docstrings
+
+Place point inside a function, run =M-x copilot-docstring=, and it
+generates and inserts an idiomatic docstring.  Supports Emacs Lisp,
+Python, JavaScript, Go, and more.  Uses =claude-haiku-4.5= for speed.
+
+#+begin_src elisp
+(require 'copilot-docstring)
+M-x copilot-docstring
+#+end_src
+
+*** commit-message — AI Commit Messages
+
+Stage your changes, run =M-x copilot-commit=, and get a
+Conventional Commits message in a vc-style popup buffer.  Edit
+freely, then =C-c C-c= to commit, =C-c C-k= to cancel, or
+=C-c C-r= to regenerate.  Uses =claude-haiku-4.5= for speed.
+
+#+begin_src elisp
+(require 'copilot-commit-message)
+M-x copilot-commit
+#+end_src
+
+[[file:copilot-commit.png]]
+
+*** org-process — AI Inbox Processor
+
+Point it at any org buffer with rough notes and it walks through
+each entry, classifying it (TODO, reference, event, someday),
+cleaning up the heading, suggesting tags, deadlines, and refile
+targets.  A GTD weekly review assistant.
+
+#+begin_src elisp
+(require 'copilot-org-process)
+;; Open an org file, then:
+M-x copilot-org-process
+#+end_src
+
+Keybindings in the review buffer:
+
+| Key | Action                          |
+|-----+---------------------------------|
+| =a= | Accept suggestion               |
+| =e= | Edit heading, then accept       |
+| =s= | Skip entry                      |
+| =r= | Regenerate suggestion           |
+| =q= | Quit                            |
+
+[[file:todo-process.png]]
+
+** Installation
+
+Clone this repo and add each example to your =load-path=:
+
+#+begin_src elisp
+(add-to-list 'load-path "~/git/emacs-copilot-sdk")
+(add-to-list 'load-path "~/git/emacs-copilot-sdk-examples/echo-bot")
+(add-to-list 'load-path "~/git/emacs-copilot-sdk-examples/docstring")
+(add-to-list 'load-path "~/git/emacs-copilot-sdk-examples/commit-message")
+(add-to-list 'load-path "~/git/emacs-copilot-sdk-examples/org-process")
+#+end_src
+
+** License
+
+GPL-3.0-or-later.

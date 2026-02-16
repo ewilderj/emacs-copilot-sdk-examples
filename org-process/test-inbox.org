@@ -1,0 +1,7 @@
+* talk to jamie about the deployment thing
+* https://arxiv.org/abs/2401.12345 interesting paper on rag
+* buy birthday present for sarah by march 10
+* maybe learn rust at some point
+* fix the login bug users are complaining about
+* dentist appointment feb 28
+* refactor the auth module its getting messy

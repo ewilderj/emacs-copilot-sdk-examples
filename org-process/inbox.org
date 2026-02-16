@@ -1,0 +1,9 @@
+* TODO [#B] Talk to @jamie about deployment :@jamie:deployment:
+* Paper on RAG (retrieval-augmented generation) :research:RAG:AI:papers:
+* TODO [#B] Buy birthday present for @sarah :@sarah:birthday:shopping:
+DEADLINE: <2026-03-10 Tue> SCHEDULED: <2026-03-01 Sun>
+* TODO Learn Rust :someday:learning:programming:rust:
+* TODO [#A] Fix login bug reported by users :bug:login:users:
+* TODO Dentist appointment :health:dentist:appointment:
+SCHEDULED: <2026-02-28 Sat>
+* TODO [#B] Refactor auth module :refactoring:auth:code-quality:
