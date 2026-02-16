@@ -74,18 +74,6 @@ Keybindings in the review buffer:
 
 [[file:todo-process.png]]
 
-** Installation
-
-Clone this repo and add each example to your =load-path=:
-
-#+begin_src elisp
-(add-to-list 'load-path "~/git/emacs-copilot-sdk")
-(add-to-list 'load-path "~/git/emacs-copilot-sdk-examples/echo-bot")
-(add-to-list 'load-path "~/git/emacs-copilot-sdk-examples/docstring")
-(add-to-list 'load-path "~/git/emacs-copilot-sdk-examples/commit-message")
-(add-to-list 'load-path "~/git/emacs-copilot-sdk-examples/org-process")
-#+end_src
-
 ** License
 
-GPL-3.0-or-later.
+GPL-3.0-or-later.  See [[file:LICENSE][LICENSE]].
