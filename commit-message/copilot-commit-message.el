@@ -1,7 +1,7 @@
 ;;; copilot-commit-message.el --- Generate commit messages with Copilot -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2026 Edd Wilder-James
-;; Author: Edd Wilder-James <edd@me.com>
+;; Author: Edd Wilder-James <https://github.com/ewilderj>
 ;; Keywords: tools, ai, vc
 
 ;; This program is free software; you can redistribute it and/or modify

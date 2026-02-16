@@ -1,7 +1,7 @@
 ;;; copilot-echo-bot.el --- Minimal Copilot SDK demo -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2026 Edd Wilder-James
-;; Author: Edd Wilder-James <edd@me.com>
+;; Author: Edd Wilder-James <https://github.com/ewilderj>
 ;; Keywords: tools, ai
 
 ;; This program is free software; you can redistribute it and/or modify

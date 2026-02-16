@@ -1,7 +1,7 @@
 ;;; copilot-org-process.el --- AI-powered org inbox processor -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2026 Edd Wilder-James
-;; Author: Edd Wilder-James <edd@me.com>
+;; Author: Edd Wilder-James <https://github.com/ewilderj>
 ;; Keywords: tools, ai, org
 
 ;; This program is free software; you can redistribute it and/or modify
