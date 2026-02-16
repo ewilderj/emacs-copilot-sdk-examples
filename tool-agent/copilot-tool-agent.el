@@ -17,10 +17,11 @@
 ;;
 ;; Each tool has a risk level:
 ;;   :safe     — runs without asking (e.g. current time)
-;;   :ask      — prompts the user: deny, allow once, or allow always
+;;   :ask      — prompts the user: [y]es this turn, [a]lways, [n]o
 ;;
-;; "Allow always" grants a session-scoped blanket approval per tool,
-;; so the user isn't nagged repeatedly for the same tool.
+;; "Yes" grants approval for the remainder of the current turn,
+;; so the user isn't re-prompted when a tool is called repeatedly.
+;; "Always" grants a session-scoped blanket approval per tool.
 ;;
 ;; Usage:
 ;;   (require 'copilot-tool-agent)
@@ -29,7 +30,11 @@
 ;;; Code:
 
 (require 'copilot-sdk)
-(require 'seq)
+
+(defgroup copilot-tool-agent nil
+  "Tool-using agent with permission model."
+  :group 'copilot
+  :prefix "copilot-tool-agent-")
 
 (defcustom copilot-tool-agent-model "claude-sonnet-4-5"
   "Model to use for the tool agent."
@@ -287,7 +292,6 @@ Inherits self-insert from `text-mode' so all keys type normally."
                          (concat "❌ " msg) 'error))
                       :on-idle
                       (lambda ()
-                        (copilot-tool-agent--append "")
                         (with-current-buffer (get-buffer "*tool-agent*")
                           (copilot-tool-agent--insert-prompt))))))
 
@@ -299,6 +303,8 @@ Inherits self-insert from `text-mode' so all keys type normally."
       (copilot-sdk-destroy-session copilot-tool-agent--session-id))
     (setq copilot-tool-agent--session-id nil))
   (setq copilot-tool-agent--always-allowed nil)
+  (setq copilot-tool-agent--turn-allowed nil)
+  (setq copilot-tool-agent--prompting nil)
   (kill-buffer)
   (message "Tool agent stopped."))
 
