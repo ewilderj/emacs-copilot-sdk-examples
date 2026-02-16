@@ -74,6 +74,26 @@ Keybindings in the review buffer:
 
 [[file:todo-process.png]]
 
+*** tool-agent — Tool Use with Permissions
+
+An interactive chat agent that demonstrates tool registration,
+dispatch, and a tiered permission model.  The agent can read files,
+list directories, get file metadata, and tell the time.
+
+Each tool has a risk level:
+- =:safe= — runs without asking (e.g. =get_current_time=)
+- =:ask= — prompts the user: =[y]es= this turn, =[a]lways=, =[n]o=
+
+Saying "yes" auto-approves that tool for the rest of the turn,
+so you aren't re-prompted when a tool is called repeatedly.
+
+#+begin_src elisp
+(require 'copilot-tool-agent)
+M-x copilot-tool-agent
+#+end_src
+
+[[file:tool-agent.png]]
+
 ** License
 
 GPL-3.0-or-later.  See [[file:LICENSE][LICENSE]].
