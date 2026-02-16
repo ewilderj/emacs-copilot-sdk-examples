@@ -93,25 +93,22 @@ RISK is :safe or :ask.  The handler is wrapped with permission checking."
    (lambda (args)
      (if (copilot-tool-agent--check-permission name)
          (funcall handler args)
-       `(:textResultForLlm
-         ,(format "Permission denied by user for tool '%s'" name)
-         :resultType "rejected")))
+       (copilot-sdk-tool-result
+        "rejected" "Permission denied by user for tool '%s'" name)))
    schema))
 
 ;;;; --- Tool Implementations ---
 
 (defun copilot-tool-agent--tool-current-time (_args)
   "Return the current date and time."
-  `(:textResultForLlm
-    ,(format-time-string "%A, %B %d, %Y at %I:%M %p %Z")
-    :resultType "success"))
+  (copilot-sdk-tool-result
+   "success" (format-time-string "%A, %B %d, %Y at %I:%M %p %Z")))
 
 (defun copilot-tool-agent--tool-read-file (args)
   "Read a file's contents.  ARGS: path."
   (let ((path (plist-get args :path)))
     (if (not (file-exists-p path))
-        `(:textResultForLlm ,(format "File not found: %s" path)
-          :resultType "failure")
+        (copilot-sdk-tool-result "failure" "File not found: %s" path)
       (let* ((content (with-temp-buffer
                         (insert-file-contents path)
                         (buffer-string)))
@@ -119,7 +116,7 @@ RISK is :safe or :ask.  The handler is wrapped with permission checking."
                             (concat (substring content 0 10000)
                                     "\n\n[truncated]")
                           content)))
-        `(:textResultForLlm ,truncated :resultType "success")))))
+        (copilot-sdk-tool-result "success" truncated)))))
 
 (defun copilot-tool-agent--tool-list-directory (args)
   "List files in a directory.  ARGS: path, pattern."
@@ -127,30 +124,26 @@ RISK is :safe or :ask.  The handler is wrapped with permission checking."
          (pattern (or (plist-get args :pattern) "*"))
          (expanded (expand-file-name dir)))
     (if (not (file-directory-p expanded))
-        `(:textResultForLlm ,(format "Not a directory: %s" dir)
-          :resultType "failure")
+        (copilot-sdk-tool-result "failure" "Not a directory: %s" dir)
       (let ((files (directory-files expanded nil pattern)))
-        `(:textResultForLlm
-          ,(mapconcat #'identity files "\n")
-          :resultType "success")))))
+        (copilot-sdk-tool-result "success" (mapconcat #'identity files "\n"))))))
 
 (defun copilot-tool-agent--tool-file-info (args)
   "Get metadata about a file.  ARGS: path."
   (let ((path (plist-get args :path)))
     (if (not (file-exists-p path))
-        `(:textResultForLlm ,(format "File not found: %s" path)
-          :resultType "failure")
+        (copilot-sdk-tool-result "failure" "File not found: %s" path)
       (let ((attrs (file-attributes path)))
-        `(:textResultForLlm
-          ,(format "path: %s\nsize: %d bytes\nmodified: %s\ntype: %s"
-                   path
-                   (file-attribute-size attrs)
-                   (format-time-string "%Y-%m-%d %H:%M:%S"
-                                       (file-attribute-modification-time attrs))
-                   (cond ((file-directory-p path) "directory")
-                         ((file-symlink-p path) "symlink")
-                         (t "file")))
-          :resultType "success")))))
+        (copilot-sdk-tool-result
+         "success"
+         "path: %s\nsize: %d bytes\nmodified: %s\ntype: %s"
+         path
+         (file-attribute-size attrs)
+         (format-time-string "%Y-%m-%d %H:%M:%S"
+                             (file-attribute-modification-time attrs))
+         (cond ((file-directory-p path) "directory")
+               ((file-symlink-p path) "symlink")
+               (t "file")))))))
 
 ;;;; --- Tool Registration ---
 
